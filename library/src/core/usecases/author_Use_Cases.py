@@ -1,4 +1,4 @@
-from src.infrastructure.database.authorRepository import get_authors_repository, insert_authors_repository
+from library.src.infrastructure.database.author_Repository import get_authors_repository, insert_authors_repository
 
 def get_authors(callback):
     try:

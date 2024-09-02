@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 import json
-from author_controllers import get_authors, insert_authors  # Certifique-se de que o caminho está correto
+from interface.controllers.author_Controllers import get_authors, insert_authors  # Certifique-se de que o caminho está correto
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):

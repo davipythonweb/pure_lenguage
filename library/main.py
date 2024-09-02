@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from .src.infrastructure.config import load_env  # Certifique-se de que o arquivo load_env.py está no caminho correto
 
-# Carrega as variáveis de ambiente a partir do arquivo app.conf
+# Carrega as variáveis de ambiente a partir do arquivo .env
 config_path = Path(__file__).resolve().parent.parent / '.env'
 load_env(config_path)
 
