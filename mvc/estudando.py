@@ -1,5 +1,4 @@
 # criar servidor python
-
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 class Handler(BaseHTTPRequestHandler):
@@ -31,6 +30,10 @@ HTTPServer(('', 8000), Handler).serve_forever(print("rodando na porta: 8000",))
 #     httpd.serve_forever()
 
 
+
+
+
+
 # import http.server  # Importa o módulo para funcionalidades básicas para criar servidores HTTP.
 # import socketserver  # Importa o módulo para criar servidores baseados em sockets.
 
@@ -56,6 +59,10 @@ HTTPServer(('', 8000), Handler).serve_forever(print("rodando na porta: 8000",))
 #     print(f"Servidor na porta {PORT}")
 #     # Mantém o servidor rodando indefinidamente, servindo as requisições que chegarem.
 #     httpd.serve_forever()
+
+
+
+
 
 
 # from http.server import HTTPServer, BaseHTTPRequestHandler
