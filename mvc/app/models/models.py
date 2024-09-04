@@ -1,22 +1,23 @@
-# importar variaveis de ambiente
 import os
-from dotenv import load_dotenv
+import psycopg2
+from dotenv import load_dotenv # pylint: disable=import-error
 
-# Carregar variáveis de ambiente do arquivo .env
 load_dotenv('../../.env')
 
-# Obter e armazenar as variáveis em variáveis Python
-db_user = os.getenv('DB_USER')
-db_pass = os.getenv('DB_PASS')
-db_host = os.getenv('DB_HOST')
-db_port = os.getenv('DB_PORT')
-db_name = os.getenv('DB_NAME')
+conn_params = {
+    'dbname': os.getenv('DB_NAME'),
+    'user': os.getenv('DB_USER'),
+    'host': os.getenv('DB_HOST'),
+    'password': os.getenv('DB_PASS'),
+    'port': os.getenv('DB_PORT')
+}
 
-# Imprimir os valores das variáveis
-print(f"DB_USER: {db_user}")
-print(f"DB_PASS: {db_pass}")
-print(f"DB_HOST: {db_host}")
-print(f"DB_PORT: {db_port}")
-print(f"DB_NAME: {db_name}")
+CONN_STRING = ' '.join([f"{key}='{value}'" for key, value in conn_params.items()])
 
-# conexao com banco postgres
+try:
+    with psycopg2.connect(CONN_STRING) as conn:
+        print("Status: Conexão realizada com sucesso.")
+except psycopg2.Error as e:
+    print(f"Status: Erro na conexão. Mensagem: {e}")
+finally:
+    print("Tentativa de conexão finalizada.")
