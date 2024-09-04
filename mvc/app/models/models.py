@@ -1,7 +1,8 @@
 # carregando variaveis de ambiente
 # conexao ao banco postgres
 # query no banco na tabela authors
-# funcao que cria servidor e faz um request na rota localhost:8000/authors
+# insert no banco na tabela authors
+# funcao que cria servidor e faz um request na rota localhost:8000/authors, GET or POST
 
 import os
 import json
@@ -50,8 +51,27 @@ def get_authors():
     except psycopg2.Error as e:
         print("Erro ao conectar ou executar a query:", str(e))
         return json.dumps({'error': str(e)})
-        
 
+
+def insert_authors(author_data):
+    """Insere um novo autor na tabela 'Authors'."""
+    query = 'INSERT INTO "Authors" (name, birthdate) VALUES (%s, %s) RETURNING id'
+    try:
+        with psycopg2.connect(CONN_STRING) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute(query, (author_data['name'], author_data['birthdate']))
+                author_id = cursor.fetchone()[0]
+                conn.commit()
+        
+        response = {'status': 'success', 'author_id': author_id}
+        print("Autor inserido com sucesso.")
+        return json.dumps(response)
+    except psycopg2.Error as e:
+        print("Erro ao inserir autor:", str(e))
+        return json.dumps({'error': str(e)})
+
+
+        
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/authors':
@@ -69,6 +89,36 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "text/plain")
             self.end_headers()
             self.wfile.write(b"Rota nao encontrada")
+
+    def do_POST(self):
+        if self.path == '/authors':
+            # Ler o comprimento do conteúdo e os dados enviados no corpo da requisição
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            author_data = json.loads(post_data)
+            
+            # Chamar a função insert_authors e obter a resposta JSON
+            response = insert_authors(author_data)
+            
+            # Enviar resposta HTTP
+            self.send_response(201)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(response.encode())
+        else:
+            # Responder para outras rotas
+            self.send_response(404)
+            self.send_header("Content-Type", "text/plain")
+            self.end_headers()
+            self.wfile.write(b"Rota nao encontrada")
+
+
+# ---body da request via postman---
+# url==> 127.0.0.1:8000/authors
+# {
+#     "name": "steve jobs",
+#     "birthdate": "1991-10-08" 
+# }
 
 # Configurar e iniciar o servidor
 server_address = ('', 8000)
