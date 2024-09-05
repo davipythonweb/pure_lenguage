@@ -81,3 +81,12 @@ HTTPServer(('', 8000), Handler).serve_forever(print("rodando na porta: 8000",))
 # # Cria um servidor HTTP,na porta 8000 chama a classe Handler para as requisições.
 # HTTPServer(('', 8000), Handler).serve_forever(print("rodando na porta: 8000",))
 # # Mantém o servidor rodando indefinidamente, servindo as requisições que chegarem.
+
+
+"""
+Core é onde fica a lógica e regras de negócios, principalmente na parte do usecases,
+Infraestructure é a infraestrutura, onde será conectado com o banco, configurações relacionado a infraestrutura e caso queira utilizar biblioteca utilizar nesta parte em relação a configuração.
+Tem a parte do database que tem o repositório que faz comunicação com o banco de dados e tem o httpServer, mesmo estando ali é la que você chama os controladores, lá você cria e monitora os endpoints.
+
+Intefrace é a parte de comunicação do usuário, então ali que é a camada mais alta onde você cria os controllers e estes controllers você instancia no httpServer que será passado para o index.js
+"""
