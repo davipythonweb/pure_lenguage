@@ -19,3 +19,11 @@ _____________________________________________
 
 
 - verificando status dos arquivos no stage=> `git status`
+
+
+#### ---body da request via postman---
+#### url==> 127.0.0.1:8000/authors
+#### {
+####     "name": "steve jobs",
+####     "birthdate": "1991-10-08" 
+#### }
