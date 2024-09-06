@@ -1,12 +1,11 @@
-import json
 
 from datetime import date, datetime
+import json
 
 from http.server import BaseHTTPRequestHandler
 import psycopg2
 
 from app.models.models import CONN_STRING
-
 
 
 
@@ -54,10 +53,9 @@ def insert_authors(author_data):
         print("Erro ao inserir autor:", str(e))
         return json.dumps({'error': str(e)})
 
-    
-class Handler(BaseHTTPRequestHandler):
-    """ class para os metodos HTTP Get e Post"""
 
+        
+class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/authors':
             # Chamar a função get_authors e obter a resposta JSON
@@ -96,6 +94,3 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "text/plain")
             self.end_headers()
             self.wfile.write(b"Rota nao encontrada")
-
-
-
