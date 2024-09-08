@@ -1,0 +1,68 @@
+1. application/services/author_service.py
+Responsabilidade: Contém a lógica de negócio aplicada ao caso de uso (regra de aplicação).
+Funções:
+get_author_by_id(id): Recupera informações de um autor com base no ID.
+create_author(name, birthdate): Insere um novo autor no sistema.
+Regras e lógica:
+Regras de validação e tratamento de casos de uso.
+Não deve acessar diretamente o banco de dados, mas sim interagir com o repositório (ex: author_repository).
+
+2. domain/entities/author.py
+Responsabilidade: Define as entidades que representam os objetos de domínio (regra de negócio).
+Funções:
+Author: Classe que representa a entidade Author com propriedades como id, name, birthdate.
+Regras e lógica:
+Este módulo define as regras de negócios que são puras e não dependem de detalhes de infraestrutura.
+Por exemplo, métodos para validação de integridade dos dados do autor.
+
+3. infrastructure/config/load_env.py
+Responsabilidade: Carrega variáveis de ambiente do arquivo .env.
+Funções:
+load_env(): Função para carregar o arquivo .env usando dotenv.
+Regras e lógica:
+Deve garantir que as variáveis sensíveis, como DB_USER, DB_PASSWORD, etc., sejam carregadas corretamente.
+
+4. infrastructure/database/postgres.py
+Responsabilidade: Faz a conexão com o banco de dados PostgreSQL.
+Funções:
+get_db_connection(): Retorna uma conexão com o banco.
+Regras e lógica:
+Deve lidar com conexões ao banco de dados e garantir que as configurações de ambiente sejam aplicadas corretamente.
+
+5. infrastructure/repositories/author_repository.py
+Responsabilidade: Faz o acesso ao banco de dados e executa operações sobre a tabela Authors.
+Funções:
+get_author_by_id(id): Retorna um autor pelo ID.
+insert_author(name, birthdate): Insere um novo autor no banco.
+Regras e lógica:
+Foca apenas em lidar com as queries SQL, a aplicação de regras de negócios acontece na camada de services.
+
+6. interfaces/http_server.py
+Responsabilidade: Inicia o servidor HTTP e mapeia rotas para os controladores.
+Funções:
+Define o servidor HTTP, o roteamento das requisições (ex: GET, POST) e invoca os controladores apropriados.
+Regras e lógica:
+Deve chamar as funções dos controladores para lidar com as requisições e processar respostas.
+
+7. presentation/controllers/author_controller.py
+Responsabilidade: Controla as requisições e respostas, interagindo com os serviços para fornecer dados para a interface.
+Funções:
+get_author_by_id(request, id): Busca o autor pelo ID.
+create_author(request): Cria um novo autor.
+Regras e lógica:
+Valida e formata a entrada/saída de dados e chama os serviços.
+
+8. main.py
+Responsabilidade: Inicia o servidor HTTP e carrega a aplicação.
+Funções:
+Inicializa a aplicação chamando o servidor definido em http_server.py.
+
+Resumo:
+    domain contém a lógica central do negócio (entidades e regras).
+
+    application/services contém os casos de uso e lógica de aplicação.
+
+    infrastructure lida com a comunicação com recursos externos (banco de dados, configurações).
+
+    presentation/controllers lida com as requisições HTTP e controla a interação com os serviços.
+    main.py serve para iniciar a aplicação.
