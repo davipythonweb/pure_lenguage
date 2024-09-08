@@ -5,7 +5,7 @@ import json
 from http.server import BaseHTTPRequestHandler
 import psycopg2
 
-from app.models.models import CONN_STRING
+from models import CONN_STRING
 
 
 

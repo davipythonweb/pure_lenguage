@@ -1,6 +1,6 @@
 from http.server import HTTPServer
 
-from app.controllers.default import Handler
+from default import Handler
 
 
 # Configurar e iniciar o servidor

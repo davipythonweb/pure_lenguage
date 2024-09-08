@@ -5,6 +5,7 @@ from dotenv import load_dotenv # pylint: disable=import-error
 # Carregar variáveis de ambiente do arquivo .env
 load_dotenv('../../.env')
 
+
 # Obter variáveis de configuração
 conn_params = {
     'dbname': os.getenv('DB_NAME'),
